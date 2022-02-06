@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cubit/misc/colors.dart';
 import 'package:flutter_cubit/widgets/app_large_text.dart';
+import 'package:flutter_cubit/widgets/app_text.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -58,7 +59,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     right:
                         20), // (b) -> they work together to position & align the tab bar correctly || using this one we control the space
                 controller:
-                    _tabController, // we use our own defined _tabController (w length 3 and vsync context) as a value for controller
+                    _tabController, // we use our own defined _tabController (w length 3 and vsync context) as a value for controller + you need to specify the same one for tabBarView as well
                 labelColor: Colors.black,
                 unselectedLabelColor: Colors.grey,
                 isScrollable:
@@ -83,23 +84,39 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             child: TabBarView(
               controller: _tabController,
               children: [
-                Container(
-                  width: 200,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
-                    image: DecorationImage(
-                      image: AssetImage(
-                        'img/mountain.jpeg'
+                ListView.builder(
+                  itemCount: 3,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      margin: const EdgeInsets.only(right: 10, top: 10),
+                      width: 200,
+                      height: 300,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white,
+                        image: DecorationImage(
+                          image: AssetImage('img/mountain.jpeg'),
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      fit: BoxFit.cover
-                    ),
-                  ),
-
+                    );
+                  },
                 ),
                 Text('There'),
                 Text('Bye'),
+              ],
+            ),
+          ),
+          SizedBox(height: 30),
+          Container(
+            margin: const EdgeInsets.only(left: 20, right: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                AppLargeText(text: 'Explore more', size: 22),
+                AppText(text: 'See all', color: AppColors.textColor1),
+
               ],
             ),
           ),
@@ -139,7 +156,9 @@ class _CirclePainter extends BoxPainter {
     _paint.color = color;
     _paint.isAntiAlias = true; // hardware acceleration
 
-    final Offset circleOffset = Offset(configuration.size!.width / 2 - radius / 2, configuration.size!.height - radius); // black magic, 
+    final Offset circleOffset = Offset(
+        configuration.size!.width / 2 - radius / 2,
+        configuration.size!.height - radius); // black magic,
     // basically makes the dot stay under the middle of the text
     // first argument is x axis, second one is y axis
     // size!  --> null checker --> The property 'width' can't be unconditionally accessed because the receiver can be 'null'.
