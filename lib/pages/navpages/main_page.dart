@@ -2,10 +2,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cubit/navpages/bar_item_page.dart';
-import 'package:flutter_cubit/navpages/home_page.dart';
-import 'package:flutter_cubit/navpages/my_page.dart';
-import 'package:flutter_cubit/navpages/search_page.dart';
+import 'package:flutter_cubit/pages/navpages/bar_item_page.dart';
+import 'package:flutter_cubit/pages/home_page.dart';
+import 'package:flutter_cubit/pages/navpages/my_page.dart';
+import 'package:flutter_cubit/pages/navpages/search_page.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key? key}) : super(key: key);
@@ -24,6 +24,7 @@ class _MainPage extends State<MainPage> {
 
   // define method to set current index page value
   int currentIndexIs = 0;
+  
   void onTapIndex(int index) {
     setState(() {
       currentIndexIs = index;
@@ -34,7 +35,7 @@ class _MainPage extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // body page index is going to show the page we want to see 
-      body: pages[currentIndexIs], // HomePage() is a widget (classes in Fltter usually are), and body takes a widget
+      body: pages[currentIndexIs], //  body takes a widget (classes in Fltter usually are)
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed, // default is .shifting, which means that we can't change the bck color and on click the icons shift

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cubit/navpages/main_page.dart';
-import 'pages/welcome_page.dart';
+import 'package:flutter_cubit/pages/navpages/main_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Cubit State Management App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
