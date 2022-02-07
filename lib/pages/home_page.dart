@@ -21,21 +21,29 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     // vsync: this -> has to have context, everytime we click on the bar, it get's rebuild, so it needs the context of the widget
     TabController _tabController = TabController(length: 3, vsync: this);
 
+    var images = { // where key is the image and the value is the text
+      'balloning.png': 'Balloning',
+      'hiking.png': 'Hiking',
+      'kayaking.png': 'Kayaking',
+      'snorkling.png': 'Snorkling'
+    };
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // menu text
+          SizedBox(height: 35),
           Container(
-            padding: const EdgeInsets.only(top: 70, left: 20),
+            padding: const EdgeInsets.only(left: 20,),
             child: Row(
               children: [
-                Icon(Icons.menu, size: 30, color: Colors.black54),
+                const Icon(Icons.menu, size: 30, color: Colors.black54),
                 Expanded(child: Container()),
                 Container(
-                  margin: const EdgeInsets.only(right: 20),
-                  width: 50,
-                  height: 50,
+                  margin: const EdgeInsets.only(right: 15),
+                  width: 40,
+                  height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.grey.withOpacity(0.5),
@@ -44,9 +52,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ],
             ),
           ),
+          SizedBox(height: 18),
           // discover text
           Container(
-            padding: const EdgeInsets.only(left: 20, top: 40, bottom: 40),
+            padding: const EdgeInsets.only(left: 33, bottom: 15),
             child: AppLargeText(text: 'Discover'),
           ),
           Container(
@@ -79,8 +88,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
           Container(
             height:
-                300, // TabBarView needs the container to have a height and width !!
+                270, // TabBarView needs the container to have a height and width !!
             width: double.maxFinite,
+            margin: const EdgeInsets.only(left: 14),
             child: TabBarView(
               controller: _tabController,
               children: [
@@ -89,11 +99,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
-                      margin: const EdgeInsets.only(right: 10, top: 10),
+                      margin: const EdgeInsets.only(right: 14, top: 10),
                       width: 200,
                       height: 300,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(33),
                         color: Colors.white,
                         image: DecorationImage(
                           image: AssetImage('img/mountain.jpeg'),
@@ -108,7 +118,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ],
             ),
           ),
-          SizedBox(height: 30),
+          SizedBox(height: 27),
           Container(
             margin: const EdgeInsets.only(left: 20, right: 20),
             child: Row(
@@ -116,9 +126,47 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               children: [
                 AppLargeText(text: 'Explore more', size: 22),
                 AppText(text: 'See all', color: AppColors.textColor1),
-
               ],
             ),
+          ),
+          SizedBox(height: 13),
+          Container(
+            margin: EdgeInsets.only(left: 20),
+            height: 100,
+            width: double.maxFinite,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 4,
+                itemBuilder: (_, index) {
+                  // default context, index
+                  return Container(
+                    margin: const EdgeInsets.only(right: 30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 80,
+                          height: 70,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(22),
+                            color: Colors.white,
+                            image: DecorationImage(
+                              image: AssetImage('img/' + images.keys.elementAt(index)),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Container(
+                          child: AppText(
+                            text: images.values.elementAt(index),
+                            color: AppColors.textColor2,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
           ),
         ],
       ),
