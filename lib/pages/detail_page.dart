@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cubit/misc/colors.dart';
+import 'package:flutter_cubit/widgets/app_butons.dart';
 import 'package:flutter_cubit/widgets/app_large_text.dart';
 import 'package:flutter_cubit/widgets/app_text.dart';
+import 'package:flutter_cubit/widgets/responsive_button.dart';
 
 class DetailPage extends StatefulWidget {
   DetailPage({Key? key}) : super(key: key);
@@ -12,6 +14,7 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+  int selectedIndex = -1; // default: means we didn't select anything yet
   int gottenStars = 3;
 
   @override
@@ -41,17 +44,18 @@ class _DetailPageState extends State<DetailPage> {
             ),
             // Menu icon
             Positioned(
-                left: 4,
-                top: 40,
-                child: Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.menu),
-                      color: Colors.white,
-                    )
-                  ],
-                )),
+              left: 4,
+              top: 40,
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.menu),
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+            ),
             Positioned(
               top: 270,
               child: Container(
@@ -109,23 +113,68 @@ class _DetailPageState extends State<DetailPage> {
                         size: 20),
                     const SizedBox(height: 5),
                     AppText(
-                      text: 'Number of people in your group',
-                      color: AppColors.mainColor),
+                        text: 'Number of people in your group',
+                        color: AppColors.mainTextColor),
+                    const SizedBox(height: 10),
                     Wrap(
                       children: List.generate(5, (index) {
-                          return Container(
-                            // margin: ,
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15)
-                              ),
-                            // color: AppColors.buttonBackground,
-                          );
-                        }),
+                        return InkWell(
+                          onTap: () {
+                            setState(() {
+                              // using this we trigger a new build
+                              selectedIndex = index; // used to change color
+                            });
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.only(right: 10),
+                            child: AppButtons(
+                                // if the selectedIndex (which we set the new state when we onTap it on a box) == current index, do this ...
+                                color: (selectedIndex == index)
+                                    ? Colors.white
+                                    : Colors.black,
+                                backgroundColor: (selectedIndex == index)
+                                    ? Colors.black
+                                    : AppColors.buttonBackground,
+                                borderColor: (selectedIndex == index)
+                                    ? Colors.black
+                                    : AppColors.buttonBackground,
+                                size: 50,
+                                text: (index + 1).toString()),
+                          ),
+                        );
+                      }),
                     ),
+                    const SizedBox(height: 25),
+                    AppLargeText(
+                        text: 'Description',
+                        color: Colors.black.withOpacity(0.8),
+                        size: 20),
+                    const SizedBox(height: 10),
+                    AppText(text: 'Go visit the mountains',
+                         color: AppColors.mainTextColor),
                   ],
                 ),
+              ),
+            ),
+            Positioned(
+              bottom: 10,
+              left: 30,
+              right: 35,
+              child: Row(
+                children: [
+                  AppButtons(
+                      color: AppColors.textColor1,
+                      backgroundColor: Colors.white,
+                      borderColor: AppColors.textColor1,
+                      size: 40,
+                      isIcon: true,
+                      icon: Icons.favorite_border),
+                const SizedBox(width: 90),
+                ResponsiveButton(
+                  isResponsive: true,
+                  height: 40,
+                ),
+                ],
               ),
             ),
           ],
