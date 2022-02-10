@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cubit/cubit/app_cubit_logic.dart';
+import 'package:flutter_cubit/cubit/app_cubits.dart';
 import 'package:flutter_cubit/pages/detail_page.dart';
 import 'package:flutter_cubit/pages/navpages/main_page.dart';
 
@@ -18,7 +21,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: DetailPage(),
+      home: BlocProvider<AppCubits>(
+        create: (context) => AppCubits(), // create the cubit
+        // we pass a child that holds all the cubits or that can check them
+        child: AppCubitLogic(), // show the logic
+        // based on this, do conditional checks 
+        ),
     );
   }
 }
