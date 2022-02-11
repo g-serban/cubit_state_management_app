@@ -1,18 +1,23 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_cubit/cubit/app_cubit_states.dart';
+import 'package:flutter_cubit/services/data_services.dart';
 
 class AppCubits extends Cubit<CubitStates> {
   // <CubitStates> is how cubit knows about the state classes
-  AppCubits() : super(InitialState()) {
+  final DataServices data;
+  late final places;
+
+  AppCubits({required this.data}) : super(InitialState()) {
     // after initializing the state, we want to emit a new state (the welcome page in our case)
     emit(WelcomeState());
   }
 
-  void getData() {
+  void getData() async {
     try {
-      
-    } catch(e) {
-
-    }
+      emit(LoadingState());
+      places = await data.getInfo();
+      // once the data is loaded, execute the next line
+      emit(LoadedState(places));
+    } catch (e) {}
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_cubit/cubit/app_cubit_logic.dart';
 import 'package:flutter_cubit/cubit/app_cubits.dart';
 import 'package:flutter_cubit/pages/detail_page.dart';
 import 'package:flutter_cubit/pages/navpages/main_page.dart';
+import 'package:flutter_cubit/services/data_services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +23,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: BlocProvider<AppCubits>(
-        create: (context) => AppCubits(), // create the cubit
+        create: (context) => AppCubits(
+          data: DataServices(),
+        ), // create the cubit
         // we pass a child that holds all the cubits or that can check them
         child: AppCubitLogic(), // show the logic
         // based on this, do conditional checks 

@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_cubit/model/data_model.dart';
 
 abstract class CubitStates extends Equatable {}
 // abstract class = another class can extend this class as well
-
 
 // we initialize every cubit app with an initialState
 class InitialState extends CubitStates {
@@ -23,9 +23,12 @@ class LoadingState extends CubitStates {
   List<Object> get props => [];
 }
 
-
 // triggered once the data has been loaded successfully
 class LoadedState extends CubitStates {
+  final List<DataModel> places;
+
+  LoadedState(this.places);
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [places]; // there's new data, go rebuild the UI
 }

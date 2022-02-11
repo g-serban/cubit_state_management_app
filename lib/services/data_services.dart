@@ -4,7 +4,7 @@ import 'package:flutter_cubit/model/data_model.dart';
 import 'package:http/http.dart' as http;
 
 class DataServices {
-  String baseUrl = 'http://';
+  String baseUrl = 'http://mark.bslmeiyu.com/api';
 
   Future<List<DataModel>> getInfo() async {
     var apiUrl = '/getplaces'; // api endpoint
