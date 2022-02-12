@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cubit/cubit/app_cubit_states.dart';
 import 'package:flutter_cubit/cubit/app_cubits.dart';
+import 'package:flutter_cubit/pages/detail_page.dart';
 import 'package:flutter_cubit/pages/home_page.dart';
 import 'package:flutter_cubit/pages/welcome_page.dart';
 
@@ -30,6 +31,8 @@ class _AppCubitLogicState extends State<AppCubitLogic> {
           return const Center(child: CircularProgressIndicator());
         } else if (state is LoadedState) {
           return HomePage();
+        } else if (state is DetailState) {
+          return DetailPage();
         } else {
           return Container(); // basically works like a route redirect, go here or there
         }

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cubit/cubit/app_cubits.dart';
 import 'package:flutter_cubit/misc/colors.dart';
 import 'package:flutter_cubit/widgets/app_butons.dart';
 import 'package:flutter_cubit/widgets/app_large_text.dart';
@@ -49,7 +51,8 @@ class _DetailPageState extends State<DetailPage> {
               child: Row(
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () =>
+                        BlocProvider.of<AppCubits>(context).goHome(),
                     icon: const Icon(Icons.menu),
                     color: Colors.white,
                   ),
@@ -150,8 +153,9 @@ class _DetailPageState extends State<DetailPage> {
                         color: Colors.black.withOpacity(0.8),
                         size: 20),
                     const SizedBox(height: 10),
-                    AppText(text: 'Go visit the mountains',
-                         color: AppColors.mainTextColor),
+                    AppText(
+                        text: 'Go visit the mountains',
+                        color: AppColors.mainTextColor),
                   ],
                 ),
               ),
@@ -169,11 +173,11 @@ class _DetailPageState extends State<DetailPage> {
                       size: 40,
                       isIcon: true,
                       icon: Icons.favorite_border),
-                const SizedBox(width: 90),
-                ResponsiveButton(
-                  isResponsive: true,
-                  height: 40,
-                ),
+                  const SizedBox(width: 90),
+                  ResponsiveButton(
+                    isResponsive: true,
+                    height: 40,
+                  ),
                 ],
               ),
             ),

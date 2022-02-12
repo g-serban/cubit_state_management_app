@@ -32,3 +32,12 @@ class LoadedState extends CubitStates {
   @override
   List<Object> get props => [places]; // there's new data, go rebuild the UI
 }
+
+class DetailState extends CubitStates {
+  final DataModel place; // we are passing a child of the List, not the list
+
+  DetailState(this.place);
+
+  @override
+  List<Object> get props => [place]; // there's new data, go rebuild the UI
+}

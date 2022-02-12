@@ -19,7 +19,9 @@ class DataServices {
       if (res.statusCode == 200) {
         // once we get the data, we need to decode it
         List<dynamic> list = json.decode(res.body);
-        return list.map((e) => DataModel.fromJson(e)).toList(); // just some black magic :)
+        print(list);
+        
+        return list.map((e) => DataModel.fromJson(e)).toList();
       } else {
         return <DataModel>[];
       }
