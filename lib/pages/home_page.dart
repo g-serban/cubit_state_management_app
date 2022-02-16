@@ -133,8 +133,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           );
                         },
                       ),
-                      Text('There'),
-                      Text('Bye'),
+                      const Text('Inspiration - Page in progress'),
+                      const Text('Emotions - Page in progress'),
                     ],
                   ),
                 ),
@@ -151,7 +151,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
                 const SizedBox(height: 13),
                 Container(
-                  margin: EdgeInsets.only(left: 20),
+                  margin: const EdgeInsets.only(left: 20),
                   height: 100,
                   width: double.maxFinite,
                   child: ListView.builder(

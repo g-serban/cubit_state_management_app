@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cubit/cubit/app_cubit_states.dart';
 import 'package:flutter_cubit/cubit/app_cubits.dart';
 import 'package:flutter_cubit/misc/colors.dart';
 import 'package:flutter_cubit/widgets/app_butons.dart';
@@ -9,7 +10,7 @@ import 'package:flutter_cubit/widgets/app_text.dart';
 import 'package:flutter_cubit/widgets/responsive_button.dart';
 
 class DetailPage extends StatefulWidget {
-  DetailPage({Key? key}) : super(key: key);
+  const DetailPage({Key? key}) : super(key: key);
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -17,11 +18,13 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   int selectedIndex = -1; // default: means we didn't select anything yet
-  int gottenStars = 3;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
+      DetailState detail = state as DetailState;
+
+      return Scaffold(
       // ignore: sized_box_for_whitespace
       body: Container(
         height: double.maxFinite,
@@ -36,9 +39,9 @@ class _DetailPageState extends State<DetailPage> {
               child: Container(
                 width: double.maxFinite,
                 height: 350,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('img/mountain.jpeg'),
+                    image: NetworkImage('http://mark.bslmeiyu.com/uploads/' + detail.place.img),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -53,7 +56,7 @@ class _DetailPageState extends State<DetailPage> {
                   IconButton(
                     onPressed: () =>
                         BlocProvider.of<AppCubits>(context).goHome(),
-                    icon: const Icon(Icons.menu),
+                    icon: const Icon(Icons.keyboard_backspace_rounded),
                     color: Colors.white,
                   ),
                 ],
@@ -79,9 +82,9 @@ class _DetailPageState extends State<DetailPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         AppLargeText(
-                            text: 'Yosemite',
+                            text: detail.place.name,
                             color: Colors.black.withOpacity(0.8)),
-                        AppLargeText(text: '\$250', color: AppColors.mainColor),
+                        AppLargeText(text: '\$${detail.place.price}', color: AppColors.mainColor),
                       ],
                     ),
                     const SizedBox(height: 10),
@@ -90,7 +93,7 @@ class _DetailPageState extends State<DetailPage> {
                         Icon(Icons.location_on, color: AppColors.mainColor),
                         const SizedBox(width: 5),
                         AppText(
-                            text: 'USA, California',
+                            text: detail.place.location,
                             color: AppColors.textColor1),
                       ],
                     ),
@@ -100,13 +103,13 @@ class _DetailPageState extends State<DetailPage> {
                         Wrap(
                           children: List.generate(5, (index) {
                             return Icon(Icons.star,
-                                color: gottenStars > index
+                                color: detail.place.stars > index
                                     ? Colors.blue
                                     : Colors.white);
                           }),
                         ),
                         const SizedBox(width: 10),
-                        AppText(text: '4.0', color: AppColors.textColor2),
+                        AppText(text: '${detail.place.stars}', color: AppColors.textColor2),
                       ],
                     ),
                     const SizedBox(height: 25),
@@ -147,15 +150,16 @@ class _DetailPageState extends State<DetailPage> {
                         );
                       }),
                     ),
-                    const SizedBox(height: 25),
+                    const SizedBox(height: 15),
                     AppLargeText(
                         text: 'Description',
                         color: Colors.black.withOpacity(0.8),
-                        size: 20),
+                        size: 15),
                     const SizedBox(height: 10),
                     AppText(
-                        text: 'Go visit the mountains',
-                        color: AppColors.mainTextColor),
+                        text: detail.place.description, // rip
+                        color: AppColors.mainTextColor,
+                        size: 13),
                   ],
                 ),
               ),
@@ -185,5 +189,6 @@ class _DetailPageState extends State<DetailPage> {
         ),
       ),
     );
+    });
   }
 }
